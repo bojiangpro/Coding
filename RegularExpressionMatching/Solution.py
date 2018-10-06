@@ -9,10 +9,20 @@ class Solution:
         if len(p) == 0:
             return len(s) == 0
         patterns = self.splitPatterns(p)
-        match_queue = Queue()
-        match_queue.put_nowait((0, 0))
         s_len = len(s) 
         p_len = len(patterns)
+        for pattern in reversed(patterns):
+            if len(pattern) == 2:
+                break
+            if s_len > 0:
+                if Solution.isEqaul(s[s_len-1], pattern):
+                    s_len -= 1
+                    p_len -= 1
+                else:
+                    return False
+            
+        match_queue = Queue()
+        match_queue.put_nowait((0, 0))
         while not match_queue.empty():
             i, j = match_queue.get_nowait()
             if s_len <= i:

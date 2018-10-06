@@ -21,6 +21,8 @@ class Test(unittest.TestCase):
         self.__test("aaaaaaaaaaaaab", "a*c*c*f*g*h*k*a*k*l*o*p*y*b", True)
         self.__test("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*a*a*b", True)
         self.__test("aaaccbccbcbaabcaa", "c*a*.*a*.*c*.c*.a*c", False)
+        self.__test("mississippi", "mis*is*ip*.", True)
+        self.__test("cbabcbbaabbcaca", ".a*b*.*.*b*c*.*b*a*", True)
 
     def testRandom(self):
         pass

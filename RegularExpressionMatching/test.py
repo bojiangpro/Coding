@@ -13,6 +13,7 @@ class Test(unittest.TestCase):
     def test(self):
         self.__test('a', '', False)
         self.__test('aa', 'a', False)
+        self.__test("a", "ab*", True)
         self.__test('aa', 'a*', True)
         self.__test('aaa', 'a*a', True)
         self.__test('ab', '.*', True)

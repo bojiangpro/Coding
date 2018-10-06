@@ -1,51 +1,29 @@
-from queue import Queue
+
 class Solution:
+
     def isMatch(self, s, p):
         """
         :type s: str
         :type p: str
         :rtype: bool
         """
-        if len(p) == 0:
-            return len(s) == 0
+        if not p:
+            return not s
         patterns = self.splitPatterns(p)
         s_len = len(s) 
         p_len = len(patterns)
-        for pattern in reversed(patterns):
-            if len(pattern) == 2:
-                break
-            if s_len > 0:
-                if Solution.isEqaul(s[s_len-1], pattern):
-                    s_len -= 1
-                    p_len -= 1
-                else:
-                    return False
-            
-        match_queue = Queue()
-        match_queue.put_nowait((0, 0))
-        while not match_queue.empty():
-            i, j = match_queue.get_nowait()
-            if s_len <= i:
-                if p_len <= j or all([len(patterns[k])==2 for k in range(j, p_len)]):
-                    return True
-                else:
-                    continue
-            if p_len <= j:
-                continue
-            pattern = patterns[j]
-            if len(pattern) == 2:
-                # pattern is char*
-                # 1. match zero time
-                match_queue.put_nowait((i, j+1))
-                if Solution.isEqaul(s[i], pattern[0]):
-                # 2. match one time
-                    match_queue.put_nowait((i+1, j+1))
-                # 3. match n times
-                    match_queue.put_nowait((i+1, j))
+        dp = [[False] * (s_len + 1) for _ in range(p_len + 1)]
+
+        dp[-1][-1] = True
+        for i in range(p_len-1, -1, -1):
+            if len(patterns[i])>1:
+                for j in range(s_len, -1, -1):
+                    dp[i][j] = dp[i+1][j] or (j < s_len and Solution.isEqaul(s[j], patterns[i][0]) and dp[i][j+1])
             else:
-                if Solution.isEqaul(s[i], pattern[0]):
-                    match_queue.put_nowait((i+1, j+1))
-        return False
+                for j in range(s_len, -1, -1):
+                    dp[i][j] = j < s_len and Solution.isEqaul(s[j], patterns[i]) and dp[i+1][j+1]
+        
+        return dp[0][0]
 
         
     @staticmethod

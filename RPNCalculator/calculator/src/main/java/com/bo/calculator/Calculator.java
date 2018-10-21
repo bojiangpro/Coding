@@ -4,7 +4,7 @@ import java.util.Stack;
 import com.bo.data.IDataProvider;
 import com.bo.data.IReporter;
 import com.bo.operation.IOperator;
-import com.bo.operation.IOperatorFactory;
+import com.bo.operation.factory.IOperatorFactory;
 import com.bo.operation.InsufficientParameterException;
 
 public class Calculator

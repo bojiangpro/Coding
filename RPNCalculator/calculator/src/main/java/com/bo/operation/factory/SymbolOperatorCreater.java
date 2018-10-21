@@ -1,4 +1,4 @@
-package com.bo.operation;
+package com.bo.operation.factory;
 
 import java.util.HashMap;
 import java.util.function.Supplier;

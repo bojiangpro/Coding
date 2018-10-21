@@ -1,5 +1,6 @@
-package com.bo.operation;
+package com.bo.operation.factory;
 
+import com.bo.operation.IOperator;
 import com.bo.operation.numeric.PushNumberOperator;
 
 class NumberOperatorCreater implements IOperatorCreater

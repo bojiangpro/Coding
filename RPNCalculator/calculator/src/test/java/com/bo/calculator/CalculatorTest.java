@@ -16,6 +16,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class CalculatorTest
 {
@@ -95,21 +97,42 @@ public class CalculatorTest
         test(new String[]{"1 2 3 * 5 + * * 6 5"}, expected);
     }
 
+    @Test
+    public void testPrecision()
+    {
+        String[] inputs = new String[]{"1 3", "/", "5 /", "7 /"};
+        String[] outputs = new String[]{"1 3", "0.333333333333333", "0.066666666666666", "0.009523809523809"};
+        DecimalFormat format = new DecimalFormat("#.###############");
+        format.setRoundingMode(RoundingMode.FLOOR);
+        testValue(inputs, outputs, format);
+    }
+
     private void testValue(String[] inputs, String[] values)
+    {
+        testValue(inputs, values, null);
+    }
+
+    private void testValue(String[] inputs, String[] values, DecimalFormat format)
     {
         for (int i = 0; i < values.length; i++) 
         {
             values[i] = getExpected(values[i]);
         }
-        test(inputs, values);
+        test(inputs, values, format);
     }
 
     private void test(String[] inputs, String[] expected)
     {
+        test(inputs, expected, null);
+    }
+
+    private void test(String[] inputs, String[] expected, DecimalFormat format)
+    {
         InputStream in = new ByteArrayInputStream(String.join("\n", inputs).getBytes());
         OutputStream out = new ByteArrayOutputStream();
         IDataProvider dataProvider = new DataProvider(in);
-        IReporter reporter = new Reporter(new PrintStream(out));
+        IReporter reporter = format == null ? new Reporter(new PrintStream(out)) 
+                                            : new Reporter(new PrintStream(out), format);
         
         this.calculator.calculate(dataProvider, reporter);
 

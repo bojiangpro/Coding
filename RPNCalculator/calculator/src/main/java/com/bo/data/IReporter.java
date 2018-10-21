@@ -1,11 +1,12 @@
 package com.bo.data;
 
-import java.util.Stack;
+import java.util.List;
 
-import com.bo.operation.IOperator;
+import com.bo.operation.IValue;
 
-public interface IReporter {
-    void report(Stack<IOperator> stack);
+public interface IReporter 
+{
+    void report(List<IValue> values);
 
     void report(String error);
 }

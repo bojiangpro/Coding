@@ -27,13 +27,13 @@ public class NumericOperator implements IValue
     @Override
     public void run(Stack<IOperator> operators) throws InsufficientParameterException 
     {
-        var size = operators.size();
+        int size = operators.size();
         if (size < this.number)
         {
             throw new InsufficientParameterException();
         }
-        var offset = size-this.number;
-        var ops = IntStream.range(0, this.number)
+        int offset = size-this.number;
+        List<IValue> ops = IntStream.range(0, this.number)
                             .mapToObj(i -> operators.get(offset+i))
                             .filter(o -> o instanceof IValue)
                             .map(v -> (IValue)v)
@@ -47,7 +47,7 @@ public class NumericOperator implements IValue
         }
         this.values = ops;
 
-        var values = this.values.stream()
+        double[] values = this.values.stream()
                                    .mapToDouble(o -> o.getValue()).toArray();
         this.value = this.compute.apply(values);
         operators.push(this);
@@ -56,7 +56,7 @@ public class NumericOperator implements IValue
     @Override
     public void undo(Stack<IOperator> operators) 
     {
-        for (var value : this.values) 
+        for (IOperator value : this.values) 
         {
             operators.push(value);
         }

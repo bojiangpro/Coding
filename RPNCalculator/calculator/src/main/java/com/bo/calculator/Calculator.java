@@ -24,8 +24,8 @@ public class Calculator
         {
             while (true)
             {
-                var symbol = dataProvider.getNextSymbol();
-                var operator = this.operatorFactory.getOperator(symbol);
+                String symbol = dataProvider.getNextSymbol();
+                IOperator operator = this.operatorFactory.getOperator(symbol);
                 if (operator == null)
                 {
                     reporter.report(operators);
@@ -37,7 +37,7 @@ public class Calculator
                 } 
                 catch (InsufficientParameterException e) 
                 {
-                    var error = String.format("operator %s (position: %d): insucient parameters", 
+                    String error = String.format("operator %s (position: %d): insucient parameters", 
                                                     symbol, dataProvider.getCurrentPosition());
                     reporter.report(error);
                     reporter.report(operators);

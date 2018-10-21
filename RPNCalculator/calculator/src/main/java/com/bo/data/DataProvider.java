@@ -28,7 +28,7 @@ public class DataProvider implements IDataProvider {
     {
         try 
         {
-            var rawData = this.scanner.nextLine();
+            String rawData = this.scanner.nextLine();
             this.matcher = pattern.matcher(rawData);
             this.index = 0;
             return true;

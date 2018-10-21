@@ -14,8 +14,8 @@ public class DefaultOperatorFactory implements IOperatorFactory
 
     public DefaultOperatorFactory()
     {
-        var numberOperatorCreater = new NumberOperatorCreater();
-        var symbolOperatorCreater = new SymbolOperatorCreater(){{
+        IOperatorCreater numberOperatorCreater = new NumberOperatorCreater();
+        IOperatorCreater symbolOperatorCreater = new SymbolOperatorCreater(){{
                 registOperatorSupplier("*", () -> new NumericOperator(2, values -> values[0]*values[1]));
                 registOperatorSupplier("+", () -> new NumericOperator(2, values -> values[0]+values[1]));
                 registOperatorSupplier("-", () -> new NumericOperator(2, values -> values[0]-values[1]));
@@ -37,7 +37,7 @@ public class DefaultOperatorFactory implements IOperatorFactory
 
     @Override
     public IOperator getOperator(String symbol) {
-        var creater = this.creaters.stream()
+        IOperatorCreater creater = this.creaters.stream()
                           .filter(c -> c.accept(symbol))
                           .findFirst().orElse(null);
         if (creater == null)

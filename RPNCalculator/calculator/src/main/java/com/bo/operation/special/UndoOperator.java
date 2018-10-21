@@ -14,7 +14,7 @@ public class UndoOperator implements IOperator {
         {
             return;
         }
-        var operator = operators.pop();
+        IOperator operator = operators.pop();
         operator.undo(operators);
     }
 

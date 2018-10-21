@@ -22,7 +22,7 @@ class NumberOperatorCreater implements IOperatorCreater
     {
         try 
         {
-            var value = Double.parseDouble(symbol);
+            double value = Double.parseDouble(symbol);
             this.operator = new PushNumberOperator(value);
             this.symbol = symbol;
             return true;

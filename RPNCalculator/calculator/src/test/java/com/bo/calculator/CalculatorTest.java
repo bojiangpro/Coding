@@ -128,7 +128,7 @@ public class CalculatorTest
 
     private void test(String[] inputs, String[] expected, DecimalFormat format)
     {
-        InputStream in = new ByteArrayInputStream(String.join("\n", inputs).getBytes());
+        InputStream in = new ByteArrayInputStream(String.join(System.lineSeparator(), inputs).getBytes());
         OutputStream out = new ByteArrayOutputStream();
         IDataProvider dataProvider = new DataProvider(in);
         IReporter reporter = format == null ? new Reporter(new PrintStream(out)) 
@@ -136,7 +136,7 @@ public class CalculatorTest
         
         this.calculator.calculate(dataProvider, reporter);
 
-        String[] actual = out.toString().split("\n");
+        String[] actual = out.toString().split(System.lineSeparator());
 
         assertArrayEquals(expected, actual);
     }
